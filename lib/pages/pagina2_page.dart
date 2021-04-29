@@ -1,3 +1,5 @@
+import 'package:estados/models/usuario.dart';
+import 'package:estados/services/usuario_service.dart';
 import 'package:flutter/material.dart';
 
 class Pagina2Page extends StatelessWidget {
@@ -5,7 +7,17 @@ class Pagina2Page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pagina 2'),
+        title: StreamBuilder(
+          stream: usuarioService.usuarioStream,
+          initialData: usuarioService.usuario,
+          builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+            return Container(
+              child: snapshot.hasData
+                  ? Text('Nombre: ${snapshot.data.nombre}')
+                  : Text('Pagina 2'),
+            );
+          },
+        ),
       ),
       body: Center(
         child: Column(
@@ -17,7 +29,10 @@ class Pagina2Page extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                final nuevoUsuario = new Usuario(nombre: 'Axell', edad: 24);
+                usuarioService.cargarUsuario(nuevoUsuario);
+              },
             ),
             MaterialButton(
               child: Text(
@@ -25,7 +40,9 @@ class Pagina2Page extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                usuarioService.cambiarEdad(30);
+              },
             ),
             MaterialButton(
               child: Text(
