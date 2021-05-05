@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 //Fin de la seccion estado
+//Fin rama getx
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
